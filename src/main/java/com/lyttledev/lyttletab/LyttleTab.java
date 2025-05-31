@@ -1,6 +1,7 @@
 package com.lyttledev.lyttletab;
 
 import com.lyttledev.lyttletab.commands.*;
+import com.lyttledev.lyttletab.handlers.TabHandler;
 import com.lyttledev.lyttletab.types.Configs;
 
 import com.lyttledev.lyttleutils.utils.communication.Console;
@@ -28,6 +29,9 @@ public final class LyttleTab extends JavaPlugin {
 
         // Commands
         new LyttleTabCommand(this);
+
+        // Handlers
+        new TabHandler(this);
     }
 
     @Override
