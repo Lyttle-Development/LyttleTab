@@ -9,11 +9,12 @@ public class Configs {
     // Configs
     public Config general;
     public Config messages;
+    public Config tab;
 
     // Default configs
     public Config defaultGeneral;
     public Config defaultMessages;
-
+    public Config defaultTab;
 
     public Configs(LyttleTab plugin) {
         this.plugin = plugin;
@@ -21,10 +22,12 @@ public class Configs {
         // Configs
         general = new Config(plugin, "config.yml");
         messages = new Config(plugin, "messages.yml");
+        tab = new Config(plugin, "tab.yml");
 
         // Default configs
         defaultGeneral = new Config(plugin, "#defaults/config.yml");
         defaultMessages = new Config(plugin, "#defaults/messages.yml");
+        defaultTab = new Config(plugin, "#defaults/tab.yml");
     }
 
     public void reload() {
