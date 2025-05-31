@@ -1,5 +1,5 @@
 name: LyttleTab
-description: Custom nametags plugin
+description: Custom tab plugin
 version: '${projectVersion}'
 main: com.lyttledev.lyttletab.LyttleTab
 api-version: '1.21'

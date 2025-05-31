@@ -1,15 +1,11 @@
 package com.lyttledev.lyttletab;
 
 import com.lyttledev.lyttletab.commands.*;
-import com.lyttledev.lyttletab.handlers.*;
 import com.lyttledev.lyttletab.types.Configs;
-import com.lyttledev.lyttletab.types.Invoice;
 
 import com.lyttledev.lyttleutils.utils.communication.Console;
 import com.lyttledev.lyttleutils.utils.communication.Message;
 import org.bukkit.plugin.java.JavaPlugin;
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.io.File;
 
