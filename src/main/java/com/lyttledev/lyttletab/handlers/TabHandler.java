@@ -2,7 +2,6 @@ package com.lyttledev.lyttletab.handlers;
 
 import com.lyttledev.lyttletab.LyttleTab;
 import com.lyttledev.lyttleutils.types.Message.Replacements;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
