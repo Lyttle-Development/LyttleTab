@@ -16,6 +16,7 @@ public final class LyttleTab extends JavaPlugin {
     public Console console;
     public Message message;
     public GlobalConfig global;
+    public TabHandler tabHandler;
 
     @Override
     public void onEnable() {
@@ -35,7 +36,7 @@ public final class LyttleTab extends JavaPlugin {
         new LyttleTabCommand(this);
 
         // Handlers
-        new TabHandler(this);
+         this.tabHandler = new TabHandler(this);
     }
 
     @Override

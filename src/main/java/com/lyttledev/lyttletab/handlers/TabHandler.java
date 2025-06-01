@@ -1,8 +1,10 @@
 package com.lyttledev.lyttletab.handlers;
 
 import com.lyttledev.lyttletab.LyttleTab;
+import com.lyttledev.lyttleutils.types.Message.Replacements;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -17,10 +19,27 @@ public class TabHandler implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Component header = Component.text("\n\n                                  play.MapleMC.net                                  \nWebsite www.MapleMC.net\n\n");
-        Component footer = Component.text("\n[Lyttletab] footer test\n\n\n");
-        event.getPlayer().sendPlayerListHeader(header);
-        event.getPlayer().sendPlayerListFooter(footer);
+        Player player = event.getPlayer();
+        setTabList(player);
+
+        Replacements replacements = new Replacements.Builder()
+                .add("<NAME>", player.getDisplayName())
+                .build();
+
+        event.getPlayer().playerListName(plugin.message.getMessage("tab_player_name", replacements, player));
+    }
+
+    public void refreshTabList() {
+
+        plugin.getServer().getOnlinePlayers().forEach(player -> {
+            setTabList(player);
+            //player.playerListName(Component.text(player.getDisplayName() + " TEST"));
+        });
+    }
+
+    public void setTabList(Player player) {
+        player.sendPlayerListHeader(plugin.message.getMessage("tab_list_header", player));
+        player.sendPlayerListFooter(plugin.message.getMessage("tab_list_footer", player));
     }
 
 }
