@@ -1,6 +1,7 @@
 package com.lyttledev.lyttletab.commands;
 
 import com.lyttledev.lyttletab.LyttleTab;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +32,7 @@ public class LyttleTabCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 plugin.config.reload();
-                plugin.message.sendMessageRaw(sender, "The config has been reloaded");
+                plugin.message.sendMessageRaw(sender, Component.text("The config has been reloaded"));
             }
         }
         return true;
