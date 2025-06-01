@@ -20,25 +20,23 @@ public class TabHandler implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         setTabList(player);
-
-        Replacements replacements = new Replacements.Builder()
-                .add("<NAME>", player.getDisplayName())
-                .build();
-
-        event.getPlayer().playerListName(plugin.message.getMessage("tab_player_name", replacements, player));
     }
 
     public void refreshTabList() {
-
         plugin.getServer().getOnlinePlayers().forEach(player -> {
             setTabList(player);
-            //player.playerListName(Component.text(player.getDisplayName() + " TEST"));
         });
     }
 
     public void setTabList(Player player) {
         player.sendPlayerListHeader(plugin.message.getMessage("tab_list_header", player));
         player.sendPlayerListFooter(plugin.message.getMessage("tab_list_footer", player));
-    }
 
+        Replacements replacements = new Replacements.Builder()
+                .add("<NAME>", player.getDisplayName())
+                .build();
+
+        player.playerListName(plugin.message.getMessage("tab_player_name", replacements, player));
+
+    }
 }
