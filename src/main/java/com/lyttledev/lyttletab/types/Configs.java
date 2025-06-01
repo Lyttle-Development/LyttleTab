@@ -22,12 +22,10 @@ public class Configs {
         // Configs
         general = new Config(plugin, "config.yml");
         messages = new Config(plugin, "messages.yml");
-        tab = new Config(plugin, "tab.yml");
 
         // Default configs
         defaultGeneral = new Config(plugin, "#defaults/config.yml");
         defaultMessages = new Config(plugin, "#defaults/messages.yml");
-        defaultTab = new Config(plugin, "#defaults/tab.yml");
     }
 
     public void reload() {
