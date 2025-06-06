@@ -1,7 +1,7 @@
 package com.lyttledev.lyttletab;
 
 import com.lyttledev.lyttletab.commands.*;
-import com.lyttledev.lyttletab.handlers.TabHandler;
+import com.lyttledev.lyttletab.handlers.*;
 import com.lyttledev.lyttletab.types.Configs;
 
 import com.lyttledev.lyttleutils.utils.communication.Console;
@@ -17,6 +17,7 @@ public final class LyttleTab extends JavaPlugin {
     public Message message;
     public GlobalConfig global;
     public TabHandler tabHandler;
+    public BossbarHandler bossbarHandler;
 
     @Override
     public void onEnable() {
@@ -37,6 +38,7 @@ public final class LyttleTab extends JavaPlugin {
 
         // Handlers
          this.tabHandler = new TabHandler(this);
+         this.bossbarHandler = new BossbarHandler(this);
     }
 
     @Override

@@ -34,6 +34,7 @@ public class LyttleTabCommand implements CommandExecutor, TabCompleter {
                 plugin.config.reload();
                 plugin.message.sendMessageRaw(sender, Component.text("The config has been reloaded"));
                 plugin.tabHandler.refreshTabList();
+                plugin.bossbarHandler.refreshBossbar();
             }
         }
         return true;
