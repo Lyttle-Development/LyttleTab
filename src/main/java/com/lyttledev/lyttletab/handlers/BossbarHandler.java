@@ -3,6 +3,7 @@ package com.lyttledev.lyttletab.handlers;
 import com.lyttledev.lyttletab.LyttleTab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class BossbarHandler implements Listener {
@@ -40,9 +42,11 @@ public class BossbarHandler implements Listener {
     }
 
     public void setBossbar(Player player) {
-        Component name = Component.text("Lyttle Tab");
+        List<String> messages = (List<String>) plugin.config.messages.get("bossbar");
+        int messageCount = messages.size();
+        int randomIndex = (int) (Math.random() * messageCount);
         BossBar bossBar = BossBar.bossBar(
-                plugin.message.getMessage("bossbar", player),
+                plugin.message.getMessageRaw(messages.get(randomIndex), player),
                 0,
                 BossBar.Color.WHITE,
                 BossBar.Overlay.PROGRESS

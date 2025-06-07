@@ -31,4 +31,8 @@ tab_list_footer: |-
   <gray>Support PlaceholderAPI!
   <gray>%server_online%/%server_max_players% @ %server_version%
 
-bossbar: "<dark_aqua><bold>Lyttle<aqua><bold>Tab"
+bossbar:
+  - "<dark_aqua><bold>Lyttle<aqua><bold>Tab"
+  - "<gray>Lightweight TAB plugin"
+  - "<gray>Support PlaceholderAPI!"
+  - "<gray>%server_online%/%server_max_players% @ %server_version%"

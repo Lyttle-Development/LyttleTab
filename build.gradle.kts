@@ -32,7 +32,7 @@ repositories {
 dependencies {
     compileOnly(libs.io.papermc.paper.paper.api)
     compileOnly("me.clip:placeholderapi:2.11.6")
-    implementation("com.lyttledev:lyttleutils:1.1.2-BETA.001")
+    implementation("com.lyttledev:lyttleutils:1.1.3-BETA.001")
 }
 
 group = "com.lyttledev"
