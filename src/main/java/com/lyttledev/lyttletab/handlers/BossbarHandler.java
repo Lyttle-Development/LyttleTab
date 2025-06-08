@@ -55,10 +55,9 @@ public class BossbarHandler implements Listener {
 
             // TODO LOOP OVER THE LIST
 
-            return Component.text(messages.get(0));
-
+            return plugin.message.getMessageRaw(messages.get(0));
         } catch (Exception e) {
-            return Component.text((String) plugin.config.messages.get("bossbar"));
+            return plugin.message.getMessage("bossbar");
         }
     }
 
