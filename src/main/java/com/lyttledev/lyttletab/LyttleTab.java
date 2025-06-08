@@ -37,8 +37,8 @@ public final class LyttleTab extends JavaPlugin {
         new LyttleTabCommand(this);
 
         // Handlers
-         this.tabHandler = new TabHandler(this);
-         this.bossbarHandler = new BossbarHandler(this);
+        if ((boolean) config.general.get("use_tab")) { this.tabHandler = new TabHandler(this); }
+        if ((boolean) config.general.get("use_bossbar")) { this.bossbarHandler = new BossbarHandler(this); }
     }
 
     @Override

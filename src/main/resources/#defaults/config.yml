@@ -1,3 +1,9 @@
+# Set to false if you don't want to use our TAB list feature
+use_tab: true
+
+# Set to false if you don't want to use our bossbar feature
+use_bossbar: true
+
 # Used internally for configuration updates.
 # ⚠️ Do not change this value.
 config_version: 0
