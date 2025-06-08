@@ -33,7 +33,7 @@ public class TabHandler implements Listener {
         player.sendPlayerListFooter(plugin.message.getMessage("tab_list_footer", player));
 
         Replacements replacements = new Replacements.Builder()
-                .add("<NAME>", player.getDisplayName())
+                .add("<NAME>", com.lyttledev.lyttleutils.utils.entity.Player.getDisplayName(player))
                 .build();
 
         player.playerListName(plugin.message.getMessage("tab_player_name", replacements, player));
