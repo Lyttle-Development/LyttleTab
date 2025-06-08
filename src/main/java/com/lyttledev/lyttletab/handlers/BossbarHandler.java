@@ -3,12 +3,12 @@ package com.lyttledev.lyttletab.handlers;
 import com.lyttledev.lyttletab.LyttleTab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.bossbar.BossBar;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,20 +33,39 @@ public class BossbarHandler implements Listener {
     public void refreshBossbar() {
         plugin.getServer().getOnlinePlayers().forEach(player -> {
 
-            UUID uuid = player.getUniqueId();
-            BossBar bossBar = bossBars.get(uuid);
-            player.hideBossBar(bossBar);
+            // Obtain the player's bossbar
+            if (bossBars.containsKey(player.getUniqueId())) {
+                UUID uuid = player.getUniqueId();
+                BossBar bossBar = bossBars.get(uuid);
 
+                // Remove bossbar
+                player.hideBossBar(bossBar);
+                bossBars.remove(uuid);
+            }
+
+            // Set new bossbar
             setBossbar(player);
         });
     }
 
+    public Component getMessage() {
+        try {
+
+            List<String> messages = (List<String>) plugin.config.messages.get("bossbar");
+
+            // TODO LOOP OVER THE LIST
+
+            return Component.text(messages.get(0));
+
+        } catch (Exception e) {
+            return Component.text((String) plugin.config.messages.get("bossbar"));
+        }
+    }
+
+
     public void setBossbar(Player player) {
-        List<String> messages = (List<String>) plugin.config.messages.get("bossbar");
-        int messageCount = messages.size();
-        int randomIndex = (int) (Math.random() * messageCount);
         BossBar bossBar = BossBar.bossBar(
-                plugin.message.getMessageRaw(messages.get(randomIndex), player),
+                getMessage(),
                 0,
                 BossBar.Color.WHITE,
                 BossBar.Overlay.PROGRESS
@@ -54,5 +73,4 @@ public class BossbarHandler implements Listener {
         player.showBossBar(bossBar);
         bossBars.put(player.getUniqueId(), bossBar);
     }
-
 }
