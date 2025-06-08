@@ -48,28 +48,40 @@ public class BossbarHandler implements Listener {
         });
     }
 
-    public Component getMessage() {
+    public Component getMessage(List<String> messages, int index, Player player) {
         try {
-
-            List<String> messages = (List<String>) plugin.config.messages.get("bossbar");
-
-            // TODO LOOP OVER THE LIST
-
-            return plugin.message.getMessageRaw(messages.get(0));
+            return plugin.message.getMessageRaw(messages.get(index), player);
         } catch (Exception e) {
-            return plugin.message.getMessage("bossbar");
+            return plugin.message.getMessage("bossbar", player);
         }
     }
 
 
     public void setBossbar(Player player) {
+        List<String> messages = (List<String>) plugin.config.messages.get("bossbar");
+
         BossBar bossBar = BossBar.bossBar(
-                getMessage(),
+                getMessage(messages, 0, player),
                 0,
                 BossBar.Color.WHITE,
                 BossBar.Overlay.PROGRESS
         );
         player.showBossBar(bossBar);
         bossBars.put(player.getUniqueId(), bossBar);
+
+        final int[] index = {0};
+
+        // Update the bossbar every x seconds
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (player.isOnline()) {
+                    index[0] = (index[0] + 1) % messages.size(); // Cycle through messages
+                    bossBar.name(getMessage(messages, index[0], player));
+                } else {
+                    this.cancel(); // Stop the task if the player is offline
+                }
+            }
+        }.runTaskTimer(plugin, 0L, 5 * 20L); // Run every x seconds (20 ticks)
     }
 }
