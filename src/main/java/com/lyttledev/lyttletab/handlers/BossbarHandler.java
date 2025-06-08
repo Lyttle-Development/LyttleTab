@@ -56,14 +56,39 @@ public class BossbarHandler implements Listener {
         }
     }
 
+    public BossBar.Color color() {
+
+        String color = (String) plugin.config.general.get("bossbar_color");
+        switch (color) {
+            case "BLUE":
+                return BossBar.Color.BLUE;
+            case "RED":
+                return BossBar.Color.RED;
+            case "PINK":
+                return BossBar.Color.PINK;
+            case "GREEN":
+                return BossBar.Color.GREEN;
+            case "PURPLE":
+                return BossBar.Color.PURPLE;
+            case "WHITE":
+                return BossBar.Color.WHITE;
+            case "YELLOW":
+                return BossBar.Color.YELLOW;
+        }
+
+        return BossBar.Color.WHITE;
+    }
 
     public void setBossbar(Player player) {
         List<String> messages = (List<String>) plugin.config.messages.get("bossbar");
 
+        String getal = (String) plugin.config.general.get("bossbar_progress");
+        float progress = Float.parseFloat(getal);
+
         BossBar bossBar = BossBar.bossBar(
                 getMessage(messages, 0, player),
-                0,
-                BossBar.Color.WHITE,
+                progress,
+                color(),
                 BossBar.Overlay.PROGRESS
         );
         player.showBossBar(bossBar);
@@ -82,6 +107,6 @@ public class BossbarHandler implements Listener {
                     this.cancel(); // Stop the task if the player is offline
                 }
             }
-        }.runTaskTimer(plugin, 0L, 5 * 20L); // Run every x seconds (20 ticks)
+        }.runTaskTimer(plugin, 0L, (int) plugin.config.general.get("bossbar_interval") * 20L); // Run every x seconds (20 ticks)
     }
 }

@@ -3,6 +3,14 @@ use_tab: true
 
 # Set to false if you don't want to use our bossbar feature
 use_bossbar: true
+# How many seconds to wait before going to the next message
+bossbar_interval: 5
+# Color options: BLUE RED PINK GREEN PURPLE WHITE YELLOW
+bossbar_color: "WHITE"
+# Range between 0 and 1. 0 being empty and 1 being full
+# The "f" after the number is needed! (The system requires a Float not an Integer)
+# examples: 0f = empty; 0.5f = half, 1f = full
+bossbar_progress: 0f
 
 # Used internally for configuration updates.
 # ⚠️ Do not change this value.
