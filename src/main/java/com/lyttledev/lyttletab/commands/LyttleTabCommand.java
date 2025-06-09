@@ -1,6 +1,8 @@
 package com.lyttledev.lyttletab.commands;
 
 import com.lyttledev.lyttletab.LyttleTab;
+import com.lyttledev.lyttletab.handlers.BossbarHandler;
+import com.lyttledev.lyttletab.handlers.TabHandler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,8 +35,8 @@ public class LyttleTabCommand implements CommandExecutor, TabCompleter {
             if (args[0].equalsIgnoreCase("reload")) {
                 plugin.config.reload();
                 plugin.message.sendMessageRaw(sender, Component.text("The config has been reloaded"));
-                plugin.tabHandler.refreshTabList();
-                plugin.bossbarHandler.refreshBossbar();
+                if ((boolean) plugin.config.tab.get("tab_enabled")) { plugin.tabHandler.refreshTabList(); }
+                if ((boolean) plugin.config.bossbar.get("bossbar_enabled")) { plugin.bossbarHandler.refreshBossbar(); }
             }
         }
         return true;

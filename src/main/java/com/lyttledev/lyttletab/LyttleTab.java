@@ -37,8 +37,8 @@ public final class LyttleTab extends JavaPlugin {
         new LyttleTabCommand(this);
 
         // Handlers
-        if ((boolean) config.general.get("use_tab")) { this.tabHandler = new TabHandler(this); }
-        if ((boolean) config.general.get("use_bossbar")) { this.bossbarHandler = new BossbarHandler(this); }
+        if ((boolean) config.tab.get("tab_enabled")) { this.tabHandler = new TabHandler(this); }
+        if ((boolean) config.bossbar.get("bossbar_enabled")) { this.bossbarHandler = new BossbarHandler(this); }
     }
 
     @Override
@@ -51,6 +51,14 @@ public final class LyttleTab extends JavaPlugin {
         if (!new File(getDataFolder(), messagesPath).exists())
             saveResource(messagesPath, false);
 
+        String bossbarPath = "bossbar.yml";
+        if (!new File(getDataFolder(), bossbarPath).exists())
+            saveResource(bossbarPath, false);
+
+        String tabPath = "tab.yml";
+        if (!new File(getDataFolder(), tabPath).exists())
+            saveResource(tabPath, false);
+
         // Defaults:
         String defaultPath = "#defaults/";
         String defaultGeneralPath =  defaultPath + configPath;
@@ -58,6 +66,12 @@ public final class LyttleTab extends JavaPlugin {
 
         String defaultMessagesPath =  defaultPath + messagesPath;
         saveResource(defaultMessagesPath, true);
+
+        String defaultBossbarPath =  defaultPath + bossbarPath;
+        saveResource(defaultBossbarPath, true);
+
+        String defaultTabPath =  defaultPath + tabPath;
+        saveResource(defaultTabPath, true);
     }
 
     private void migrateConfig() {

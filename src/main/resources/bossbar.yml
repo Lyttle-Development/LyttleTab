@@ -1,0 +1,33 @@
+# Set to false if you don't want to use our bossbar feature
+bossbar_enabled: true
+
+bossbar_interval: 5.0
+
+bossbar_color:
+  - "BLUE"
+  - "BLUE"
+  - "GREEN"
+  - "PURPLE"
+  - "YELLOW"
+
+bossbar_fill_percentage:
+  - "100"
+  - "80"
+  - "50"
+  - "20"
+  - "0"
+
+bossbar_overlay:
+  - "1"
+  - "2"
+  - "3"
+  - "4"
+  - "5"
+
+bossbar_text:
+  - "<dark_aqua><bold>Lyttle<aqua><bold>Tab"
+  - "<gray>Lightweight TAB plugin"
+  - "<gray>Support PlaceholderAPI!"
+  - "<gray>%server_online%/%server_max_players% @ %server_version%"
+  - "<gray>Change the bar text in <aqua>bossbar.yml<gray>!"
+

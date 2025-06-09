@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import static com.lyttledev.lyttleutils.utils.entity.Player.getDisplayName;
+
 public class TabHandler implements Listener {
     public static LyttleTab plugin;
 
@@ -29,14 +31,17 @@ public class TabHandler implements Listener {
     }
 
     public void setTabList(Player player) {
-        player.sendPlayerListHeader(plugin.message.getMessage("tab_list_header", player));
-        player.sendPlayerListFooter(plugin.message.getMessage("tab_list_footer", player));
+        String header = (String) plugin.config.tab.get("tab_list_header");
+        String footer = (String) plugin.config.tab.get("tab_list_footer");
+        player.sendPlayerListHeader(plugin.message.getMessageRaw(header, player));
+        player.sendPlayerListFooter(plugin.message.getMessageRaw(footer, player));
 
         Replacements replacements = new Replacements.Builder()
-                .add("<NAME>", com.lyttledev.lyttleutils.utils.entity.Player.getDisplayName(player))
+                .add("<NAME>", getDisplayName(player))
                 .build();
 
-        player.playerListName(plugin.message.getMessage("tab_player_name", replacements, player));
+        String playerName = (String) plugin.config.tab.get("tab_player_name");
+        player.playerListName(plugin.message.getMessageRaw(playerName, replacements, player));
 
     }
 }
