@@ -6,11 +6,11 @@ use_bossbar: true
 # How many seconds to wait before going to the next message
 bossbar_interval: 5
 # Color options: BLUE RED PINK GREEN PURPLE WHITE YELLOW
-bossbar_color: "WHITE"
-# Range between 0 and 1. 0 being empty and 1 being full
-# The "f" after the number is needed! (The system requires a Float not an Integer)
-# examples: 0f = empty; 0.5f = half, 1f = full
-bossbar_progress: 0f
+bossbar_color: "BLUE"
+# This represents a percentage of how full the bar should be colored in
+# Examples: Just a quarter = 25, halfway = 50, 3 quarts = 75
+# Keep the range between 0 and 100!
+bossbar_fill_precentage: 100
 
 # Used internally for configuration updates.
 # ⚠️ Do not change this value.

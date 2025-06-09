@@ -82,8 +82,8 @@ public class BossbarHandler implements Listener {
     public void setBossbar(Player player) {
         List<String> messages = (List<String>) plugin.config.messages.get("bossbar");
 
-        String getal = (String) plugin.config.general.get("bossbar_progress");
-        float progress = Float.parseFloat(getal);
+        int configNumber = (int) plugin.config.general.get("bossbar_fill_precentage");
+        float progress = Float.parseFloat(String.valueOf(configNumber)) / 100;;
 
         BossBar bossBar = BossBar.bossBar(
                 getMessage(messages, 0, player),
