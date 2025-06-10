@@ -17,7 +17,6 @@ repositories {
     maven { url = uri("https://oss.sonatype.org/content/groups/public/") }
     maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://repo.maven.apache.org/maven2/") }
-    maven { url = uri("https://repo.extendedclip.com/releases/") }
     maven {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/Lyttle-Development/LyttleUtils")
@@ -31,7 +30,6 @@ repositories {
 
 dependencies {
     compileOnly(libs.io.papermc.paper.paper.api)
-    compileOnly("me.clip:placeholderapi:2.11.6")
     implementation("com.lyttledev:lyttleutils:1.1.4")
 }
 
