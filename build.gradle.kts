@@ -160,7 +160,7 @@ println("Channel: $envChannel")
 hangarPublish {
     publications.register("plugin") {
         version.set(versionString)
-        channel.set(channel)
+        channel.set(envChannel)
         changelog.set(changelogContent)
         id.set("LyttleTab")
         apiKey.set(System.getenv("HANGAR_API_TOKEN"))
