@@ -16,6 +16,10 @@ public class TabHandler implements Listener {
     public TabHandler(LyttleTab plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
         TabHandler.plugin = plugin;
+
+        // Refresh tab list for all players every x seconds
+        int refreshInterval = (int) plugin.config.tab.get("tab_list_refresh_interval");
+        Bukkit.getScheduler().runTaskTimer(plugin, this::refreshTabList, 0L, refreshInterval * 20L); // Convert seconds to ticks
     }
 
     @EventHandler
@@ -25,9 +29,7 @@ public class TabHandler implements Listener {
     }
 
     public void refreshTabList() {
-        plugin.getServer().getOnlinePlayers().forEach(player -> {
-            setTabList(player);
-        });
+        plugin.getServer().getOnlinePlayers().forEach(this::setTabList);
     }
 
     public void setTabList(Player player) {

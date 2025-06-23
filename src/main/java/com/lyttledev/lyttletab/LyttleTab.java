@@ -80,15 +80,16 @@ public final class LyttleTab extends JavaPlugin {
         }
 
         switch (config.general.get("config_version").toString()) {
-//            case "0":
-//                // Migrate config entries.
-//
-//                // Update config version.
-//                config.general.set("config_version", 1);
-//
-//                // Recheck if the config is fully migrated.
-//                migrateConfig();
-//                break;
+            case "0":
+                // Migrate config entries.
+                config.tab.set("tab_list_refresh_interval", config.defaultTab.get("tab_list_refresh_interval"));
+
+                // Update config version.
+                config.general.set("config_version", 1);
+
+                // Recheck if the config is fully migrated.
+                migrateConfig();
+                break;
             default:
                 break;
         }

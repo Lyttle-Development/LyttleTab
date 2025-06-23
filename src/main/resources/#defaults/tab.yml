@@ -1,6 +1,7 @@
 tab_enabled: true
 
 tab_player_name: "%luckperms_prefix% <NAME>"
+tab_list_refresh_interval: 5
 
 tab_list_header: |-
   <dark_aqua><bold>Lyttle<aqua><bold>Tab<reset>
