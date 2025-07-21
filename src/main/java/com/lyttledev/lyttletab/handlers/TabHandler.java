@@ -32,7 +32,7 @@ public class TabHandler implements Listener {
         plugin.getServer().getOnlinePlayers().forEach(this::setTabList);
     }
 
-    public void setTabList(Player player) {
+    private void setTabList(Player player) {
         String header = (String) plugin.config.tab.get("tab_list_header");
         String footer = (String) plugin.config.tab.get("tab_list_footer");
         player.sendPlayerListHeader(plugin.message.getMessageRaw(header, player));
@@ -44,6 +44,14 @@ public class TabHandler implements Listener {
 
         String playerName = (String) plugin.config.tab.get("tab_player_name");
         player.playerListName(plugin.message.getMessageRaw(playerName, replacements, player));
+        player.setPlayerListOrder(getTabPriority(player));
+    }
 
+    private int getTabPriority(Player player) {
+        return player.getEffectivePermissions().stream()
+                .filter(permission -> permission.getPermission().startsWith("lyttletab.tabpriority."))
+                .map(permission -> Integer.parseInt(permission.getPermission().replace("lyttletab.tabpriority.", "")))
+                .max(Integer::compareTo)
+                .orElse(0);
     }
 }

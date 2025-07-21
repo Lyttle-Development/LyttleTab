@@ -1,12 +1,20 @@
+# Toggle the use of our TabList feature, set to disabled if you only want to use the BossBar feature.
 tab_enabled: true
 
+# Configure the layout of players in the TabList.
+# This supports PlaceHolder API!
+# <NAME> will be replaced with the players DisplayName.
 tab_player_name: "%luckperms_prefix% <NAME>"
+
+# How fast should the TabList refresh in seconds.
 tab_list_refresh_interval: 5
 
+# Set the text at the top of the TabList
 tab_list_header: |-
   <dark_aqua><bold>Lyttle<aqua><bold>Tab<reset>
   <gray>Lightweight TAB plugin
 
+# Set the text at the bottom of the TabList
 tab_list_footer: |-
   <gray>Support PlaceholderAPI!
   <gray>%server_online%/%server_max_players% @ %server_version%
