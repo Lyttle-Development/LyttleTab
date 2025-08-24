@@ -1,37 +1,37 @@
 package com.lyttledev.lyttletab.types;
 
 import com.lyttledev.lyttletab.LyttleTab;
-import com.lyttledev.lyttleutils.types.Config;
+import com.lyttledev.lyttleutils.types.YamlConfig;
 
 public class Configs {
     private final LyttleTab plugin;
 
     // Configs
-    public Config general;
-    public Config messages;
-    public Config bossbar;
-    public Config tab;
+    public YamlConfig general;
+    public YamlConfig messages;
+    public YamlConfig bossbar;
+    public YamlConfig tab;
 
     // Default configs
-    public Config defaultGeneral;
-    public Config defaultMessages;
-    public Config defaultBossbar;
-    public Config defaultTab;
+    public YamlConfig defaultGeneral;
+    public YamlConfig defaultMessages;
+    public YamlConfig defaultBossbar;
+    public YamlConfig defaultTab;
 
     public Configs(LyttleTab plugin) {
         this.plugin = plugin;
 
         // Configs
-        general = new Config(plugin, "config.yml");
-        messages = new Config(plugin, "messages.yml");
-        bossbar = new Config(plugin, "bossbar.yml");
-        tab = new Config(plugin, "tab.yml");
+        general = new YamlConfig(plugin, "config.yml");
+        messages = new YamlConfig(plugin, "messages.yml");
+        bossbar = new YamlConfig(plugin, "bossbar.yml");
+        tab = new YamlConfig(plugin, "tab.yml");
 
         // Default configs
-        defaultGeneral = new Config(plugin, "#defaults/config.yml");
-        defaultMessages = new Config(plugin, "#defaults/messages.yml");
-        defaultBossbar = new Config(plugin, "#defaults/bossbar.yml");
-        defaultTab = new Config(plugin, "#defaults/tab.yml");
+        defaultGeneral = new YamlConfig(plugin, "#defaults/config.yml");
+        defaultMessages = new YamlConfig(plugin, "#defaults/messages.yml");
+        defaultBossbar = new YamlConfig(plugin, "#defaults/bossbar.yml");
+        defaultTab = new YamlConfig(plugin, "#defaults/tab.yml");
     }
 
     public void reload() {
