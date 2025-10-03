@@ -7,7 +7,7 @@ tab_enabled: true
 tab_player_name: "%luckperms_prefix% <NAME>"
 
 # How fast should the TabList refresh in seconds.
-tab_list_refresh_interval: 5
+tab_list_refresh_interval: 2
 tab_list_animation_interval: 5
 
 # Set the text at the top of the TabList
