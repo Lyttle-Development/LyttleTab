@@ -8,13 +8,19 @@ tab_player_name: "%luckperms_prefix% <NAME>"
 
 # How fast should the TabList refresh in seconds.
 tab_list_refresh_interval: 5
+tab_list_animation_interval: 5
 
 # Set the text at the top of the TabList
-tab_list_header: |-
-  <dark_aqua><bold>Lyttle<aqua><bold>Tab<reset>
-  <gray>Lightweight TAB plugin
+tab_list_header:
+  - |-
+    <dark_aqua><bold>Lyttle<aqua><bold>Tab<reset>
+    <gray>Lightweight TAB plugin
+  - |-
+    <dark_aqua><bold>Lyttle<aqua><bold>Tab<reset>
+    <gray>Now supports animated BossBars!
 
 # Set the text at the bottom of the TabList
-tab_list_footer: |-
-  <gray>Support PlaceholderAPI!
-  <gray>%server_online%/%server_max_players% @ %server_version%
+tab_list_footer:
+  - |-
+    <gray>Support PlaceholderAPI!
+    <gray>%server_online%/%server_max_players% @ %server_version%
