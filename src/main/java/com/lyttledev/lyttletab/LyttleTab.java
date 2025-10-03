@@ -10,6 +10,7 @@ import com.lyttledev.lyttleutils.utils.storage.GlobalConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.List;
 
 public final class LyttleTab extends JavaPlugin {
     public Configs config;
@@ -86,6 +87,18 @@ public final class LyttleTab extends JavaPlugin {
 
                 // Update config version.
                 config.general.set("config_version", 1);
+
+                // Recheck if the config is fully migrated.
+                migrateConfig();
+                break;
+            case "1":
+                // Migrate config entries.
+                config.tab.set("tab_list_header", List.of(config.tab.get("tab_list_header")));
+                config.tab.set("tab_list_footer", List.of(config.tab.get("tab_list_footer")));
+                config.tab.set("tab_list_animation_interval", config.defaultTab.get("tab_list_animation_interval"));
+
+                // Update config version.
+                config.general.set("config_version", 2);
 
                 // Recheck if the config is fully migrated.
                 migrateConfig();
