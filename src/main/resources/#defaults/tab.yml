@@ -2,8 +2,6 @@
 tab_enabled: true
 
 # Configure the layout of players in the TabList.
-# This supports PlaceHolder API!
-# <NAME> will be replaced with the players DisplayName.
 tab_player_name: "%luckperms_prefix% <NAME>"
 
 # How fast should the TabList refresh in seconds.
@@ -24,3 +22,39 @@ tab_list_footer:
   - |-
     <gray>Support PlaceholderAPI!
     <gray>%server_online%/%server_max_players% @ %server_version%
+
+# Dynamic, fully configurable sorting (object, not list)
+# Rules are evaluated top-to-bottom; the first rule that produces a difference decides.
+# Available rule types and their required fields:
+# - type: placeholder
+#     placeholder: "<any PAPI placeholder>"            # required
+#     order: [val1, val2, ...]                         # optional explicit value priority list; unknown values go after and are A->Z
+# - type: group
+#     order: [group1, group2, ...]                     # required group priority list
+#     NOTES:
+#       - Groups are detected generically via permissions like "group.<name>" or "luckperms.group.<name>" (LuckPerms compatible).
+# - type: placeholder_a_to_z
+#     placeholder: "<any PAPI placeholder>"            # required (e.g., "%player%", "%luckperms_primary_group_name%")
+#     order: asc|desc                                  # required direction; "asc" = A->Z, "desc" = Z->A; empty values sort last
+#
+# Extra notes:
+# - You can use any valid PAPI placeholder; nothing is hardcoded.
+# - If multiple rules are defined, they are used as tie-breakers in order.
+# - Unknown placeholder values (not in 'order') are placed after explicit values, then compared alphabetically.
+sorting:
+  enabled: true
+  rules:
+    # Primary: sort by LuckPerms primary group by explicit order
+    # Replace 'admin' and 'default' with your actual primary group names if different.
+    - type: placeholder
+      placeholder: '%luckperms_primary_group_name%'
+      order: [admin, default]
+
+    # Secondary: group-based priority with just 2 groups (example: 'admin' over 'default')
+    - type: group
+      order: [admin, default]
+
+    # Tertiary: alphabetical by player name
+    - type: placeholder_a_to_z
+      placeholder: '%player%'
+      order: asc
