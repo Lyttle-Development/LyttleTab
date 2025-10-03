@@ -47,12 +47,18 @@ sorting:
     # Primary: sort by LuckPerms primary group by explicit order
     # Replace 'admin' and 'default' with your actual primary group names if different.
     - type: placeholder
-      placeholder: '%luckperms_primary_group_name%'
-      order: [admin, default]
+      placeholder: '%player_gamemode%'
+      order:
+        - creative
+        - survival
+        - adventure
+        - spectator
 
     # Secondary: group-based priority with just 2 groups (example: 'admin' over 'default')
     - type: group
-      order: [admin, default]
+      order:
+        - admin
+        - default
 
     # Tertiary: alphabetical by player name
     - type: placeholder_a_to_z

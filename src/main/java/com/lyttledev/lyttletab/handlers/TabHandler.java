@@ -126,14 +126,14 @@ public class TabHandler implements Listener {
                 switch (type) {
                     case "placeholder": {
                         String placeholder = toStringSafe(rawRule.get("placeholder"));
-                        List<String> order = toStringList(rawRule.get("order")).reversed();
+                        List<String> order = toStringList(rawRule.get("order")).reversed();;
                         if (!placeholder.isEmpty()) {
                             sortEngine.rules.add(new PlaceholderOrderRule(placeholder, order));
                         }
                         break;
                     }
                     case "group": {
-                        List<String> order = toStringList(rawRule.get("order"));
+                        List<String> order = toStringList(rawRule.get("order")).reversed();;
                         sortEngine.rules.add(new GroupOrderRule(order));
                         break;
                     }
@@ -228,7 +228,7 @@ public class TabHandler implements Listener {
                     int c = rule.compare(a, b);
                     if (c != 0) return c;
                 }
-                return String.CASE_INSENSITIVE_ORDER.compare(a.getName(), b.getName());
+                return String.CASE_INSENSITIVE_ORDER.compare(a.getName().toLowerCase(Locale.ROOT), b.getName().toLowerCase(Locale.ROOT));
             };
         }
     }
@@ -244,6 +244,7 @@ public class TabHandler implements Listener {
     /**
      * Explicit order: first in the order list is highest priority (lowest index).
      * Players matching the first entry are sorted to the top.
+     * All value and placeholder comparisons are case-insensitive.
      */
     private final class PlaceholderOrderRule implements SortRule {
         private final String placeholder;
@@ -252,11 +253,15 @@ public class TabHandler implements Listener {
         private final Map<UUID, String> values = new HashMap<>();
 
         private PlaceholderOrderRule(String placeholder, List<String> order) {
-            this.placeholder = placeholder;
-            this.explicitOrder = (order == null) ? Collections.emptyList() : new ArrayList<>(order);
+            this.placeholder = placeholder.toLowerCase(Locale.ROOT); // force lower case
+            this.explicitOrder = (order == null) ? Collections.emptyList() : new ArrayList<>();
             this.orderIndex = new HashMap<>();
-            for (int i = 0; i < this.explicitOrder.size(); i++) {
-                orderIndex.put(this.explicitOrder.get(i).toLowerCase(Locale.ROOT), i);
+            if (order != null) {
+                for (int i = 0; i < order.size(); i++) {
+                    String val = order.get(i) == null ? "" : order.get(i).toLowerCase(Locale.ROOT);
+                    this.explicitOrder.add(val);
+                    orderIndex.put(val, i);
+                }
             }
         }
 
@@ -265,7 +270,7 @@ public class TabHandler implements Listener {
             values.clear();
             for (Player p : players) {
                 String v = resolvePlaceholderAsString(placeholder, p);
-                values.put(p.getUniqueId(), v == null ? "" : v);
+                values.put(p.getUniqueId(), v == null ? "" : v.toLowerCase(Locale.ROOT));
             }
         }
 
@@ -281,12 +286,12 @@ public class TabHandler implements Listener {
                 // Lower index = higher priority/top
                 return Integer.compare(ia, ib);
             }
-            return String.CASE_INSENSITIVE_ORDER.compare(va, vb);
+            return va.compareTo(vb);
         }
 
         private Integer lookupIndex(String v) {
             if (v == null) return explicitOrder.size();
-            Integer idx = orderIndex.get(v.toLowerCase(Locale.ROOT));
+            Integer idx = orderIndex.get(v);
             return (idx != null) ? idx : explicitOrder.size();
         }
 
@@ -302,10 +307,14 @@ public class TabHandler implements Listener {
         private final Map<UUID, List<String>> playerGroups = new HashMap<>();
 
         private GroupOrderRule(List<String> order) {
-            this.explicitOrder = (order == null) ? Collections.emptyList() : new ArrayList<>(order);
+            this.explicitOrder = (order == null) ? Collections.emptyList() : new ArrayList<>();
             this.orderIndex = new HashMap<>();
-            for (int i = 0; i < this.explicitOrder.size(); i++) {
-                orderIndex.put(this.explicitOrder.get(i).toLowerCase(Locale.ROOT), i);
+            if (order != null) {
+                for (int i = 0; i < order.size(); i++) {
+                    String val = order.get(i) == null ? "" : order.get(i).toLowerCase(Locale.ROOT);
+                    this.explicitOrder.add(val);
+                    orderIndex.put(val, i);
+                }
             }
         }
 
@@ -314,7 +323,11 @@ public class TabHandler implements Listener {
             playerGroups.clear();
             for (Player p : players) {
                 List<String> groups = extractGroups(p);
-                playerGroups.put(p.getUniqueId(), groups);
+                List<String> lowerGroups = new ArrayList<>(groups.size());
+                for (String g : groups) {
+                    lowerGroups.add(g.toLowerCase(Locale.ROOT));
+                }
+                playerGroups.put(p.getUniqueId(), lowerGroups);
             }
         }
 
@@ -326,13 +339,13 @@ public class TabHandler implements Listener {
 
             String ga = firstGroupName(playerGroups.get(a.getUniqueId()));
             String gb = firstGroupName(playerGroups.get(b.getUniqueId()));
-            return String.CASE_INSENSITIVE_ORDER.compare(ga, gb);
+            return ga.compareTo(gb);
         }
 
         private int firstMatchIndex(List<String> groups) {
             if (groups == null || groups.isEmpty()) return explicitOrder.size();
             for (String g : groups) {
-                Integer idx = orderIndex.get(g.toLowerCase(Locale.ROOT));
+                Integer idx = orderIndex.get(g);
                 if (idx != null) return idx;
             }
             return explicitOrder.size();
@@ -370,7 +383,7 @@ public class TabHandler implements Listener {
         private final Map<UUID, String> values = new HashMap<>();
 
         private PlaceholderAlphaRule(String placeholder, boolean asc) {
-            this.placeholder = placeholder;
+            this.placeholder = placeholder.toLowerCase(Locale.ROOT);
             this.asc = asc;
         }
 
@@ -380,11 +393,13 @@ public class TabHandler implements Listener {
             for (Player p : players) {
                 String v;
                 if ("%player%".equalsIgnoreCase(placeholder.trim())) {
-                    v = p.getName();
+                    v = p.getName().toLowerCase(Locale.ROOT);
                 } else {
                     v = resolvePlaceholderAsString(placeholder, p);
                     if (v != null && v.trim().equalsIgnoreCase(placeholder.trim())) {
                         v = "";
+                    } else if (v != null) {
+                        v = v.toLowerCase(Locale.ROOT);
                     }
                 }
                 values.put(p.getUniqueId(), v == null ? "" : v);
@@ -399,7 +414,7 @@ public class TabHandler implements Listener {
             boolean bEmpty = vb == null || vb.isEmpty();
             if (aEmpty && bEmpty) return 0;
             if (aEmpty != bEmpty) return aEmpty ? 1 : -1;
-            int cmp = String.CASE_INSENSITIVE_ORDER.compare(va, vb);
+            int cmp = va.compareTo(vb);
             return asc ? cmp : -cmp;
         }
 
@@ -411,16 +426,17 @@ public class TabHandler implements Listener {
 
     /**
      * Resolves a PAPI placeholder for a player, returns plain text, never null.
+     * Always processes in lower case for case-insensitive comparison.
      */
     private String resolvePlaceholderAsString(String placeholder, Player player) {
         try {
             Component papiValue = plugin.message.getMessageRaw(placeholder, player);
             if (papiValue == null) return "";
             String out = PLAIN_SERIALIZER.serialize(papiValue).trim();
-            if (out.equals(placeholder)) {
+            if (out.equalsIgnoreCase(placeholder)) {
                 return "";
             }
-            return out;
+            return out.toLowerCase(Locale.ROOT);
         } catch (Exception e) {
             return "";
         }
