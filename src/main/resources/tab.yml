@@ -8,6 +8,9 @@ tab_player_name: "%luckperms_prefix% <NAME>"
 tab_list_refresh_interval: 2
 tab_list_animation_interval: 5
 
+# Should players with the invisibility potion effect be hidden in the tab list?
+tab_hide_on_invisibility_potion: false
+
 # Set the text at the top of the TabList
 tab_list_header:
   - |-

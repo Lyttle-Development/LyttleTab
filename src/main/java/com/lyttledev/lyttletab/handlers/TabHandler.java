@@ -9,8 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,6 +48,34 @@ public class TabHandler implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         refreshTabList();
+    }
+
+    @EventHandler
+    public void onPotionEffect(EntityPotionEffectEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return;
+        }
+        Player player = (Player) event.getEntity();
+        if (event.getNewEffect() != null && event.getNewEffect().getType() == PotionEffectType.INVISIBILITY) {
+            hidePlayerFromTab(player, true);
+            return;
+        }
+        if (event.getOldEffect() != null && event.getOldEffect().getType() == PotionEffectType.INVISIBILITY) {
+            hidePlayerFromTab(player, false);
+        }
+    }
+
+    public void hidePlayerFromTab(Player player, Boolean bool) {
+        for (Player target : Bukkit.getOnlinePlayers()) {
+            if (target == player) {
+                return;
+            }
+            if (bool) {
+                target.unlistPlayer(player);
+                return;
+            }
+            target.listPlayer(player);
+        }
     }
 
     public void refreshTabList() {
