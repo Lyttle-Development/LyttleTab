@@ -96,6 +96,7 @@ public final class LyttleTab extends JavaPlugin {
                 config.tab.set("tab_list_header", List.of(config.tab.get("tab_list_header")));
                 config.tab.set("tab_list_footer", List.of(config.tab.get("tab_list_footer")));
                 config.tab.set("tab_list_animation_interval", config.defaultTab.get("tab_list_animation_interval"));
+                config.tab.set("sorting", config.defaultTab.get("sorting"));
 
                 // Update config version.
                 config.general.set("config_version", 2);

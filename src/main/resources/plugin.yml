@@ -8,6 +8,10 @@ authors:
   - ThatsATim
   - Stualyttle
 
+soft-dependencies:
+  - PlaceholderAPI
+  - LuckPerms
+
 commands:
   lyttletab:
     description: Admin command, mainly reload the config without the rest of the server
