@@ -7,6 +7,10 @@ import com.lyttledev.lyttletab.types.Configs;
 import com.lyttledev.lyttleutils.utils.communication.Console;
 import com.lyttledev.lyttleutils.utils.communication.Message;
 import com.lyttledev.lyttleutils.utils.storage.GlobalConfig;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -34,12 +38,20 @@ public final class LyttleTab extends JavaPlugin {
         this.console = new Console(this);
         this.message = new Message(this, config.messages, global);
 
-        // Commands
-        new LyttleTabCommand(this);
+        // Register commands
+        LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
+        manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+            final Commands commands = event.registrar();
+            this.registerCommands(commands);
+        });
 
         // Handlers
         if ((boolean) config.tab.get("tab_enabled")) { this.tabHandler = new TabHandler(this); }
         if ((boolean) config.bossbar.get("bossbar_enabled")) { this.bossbarHandler = new BossbarHandler(this); }
+    }
+
+    public void registerCommands(Commands commands) {
+        LyttleTabCommand.createCommand(this, commands);
     }
 
     @Override

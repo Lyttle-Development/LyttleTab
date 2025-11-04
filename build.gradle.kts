@@ -93,6 +93,12 @@ tasks.named("processResources") {
     dependsOn(copyContents)
 }
 
+tasks.processResources {
+    filesMatching("paper-plugin.yml") {
+        expand(project.properties)
+    }
+}
+
 tasks.named("build") {
     dependsOn(copyContents)
 }
