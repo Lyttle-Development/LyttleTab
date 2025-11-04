@@ -7,9 +7,14 @@ import com.lyttledev.lyttletab.types.Configs;
 import com.lyttledev.lyttleutils.utils.communication.Console;
 import com.lyttledev.lyttleutils.utils.communication.Message;
 import com.lyttledev.lyttleutils.utils.storage.GlobalConfig;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.List;
 
 public final class LyttleTab extends JavaPlugin {
     public Configs config;
@@ -33,12 +38,20 @@ public final class LyttleTab extends JavaPlugin {
         this.console = new Console(this);
         this.message = new Message(this, config.messages, global);
 
-        // Commands
-        new LyttleTabCommand(this);
+        // Register commands
+        LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
+        manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+            final Commands commands = event.registrar();
+            this.registerCommands(commands);
+        });
 
         // Handlers
         if ((boolean) config.tab.get("tab_enabled")) { this.tabHandler = new TabHandler(this); }
         if ((boolean) config.bossbar.get("bossbar_enabled")) { this.bossbarHandler = new BossbarHandler(this); }
+    }
+
+    public void registerCommands(Commands commands) {
+        LyttleTabCommand.createCommand(this, commands);
     }
 
     @Override
@@ -86,6 +99,20 @@ public final class LyttleTab extends JavaPlugin {
 
                 // Update config version.
                 config.general.set("config_version", 1);
+
+                // Recheck if the config is fully migrated.
+                migrateConfig();
+                break;
+            case "1":
+                // Migrate config entries.
+                config.tab.set("tab_list_header", List.of(config.tab.get("tab_list_header")));
+                config.tab.set("tab_list_footer", List.of(config.tab.get("tab_list_footer")));
+                config.tab.set("tab_list_animation_interval", config.defaultTab.get("tab_list_animation_interval"));
+                config.tab.set("sorting", config.defaultTab.get("sorting"));
+                config.tab.set("tab_hide_on_invisibility_potion", config.defaultTab.get("tab_hide_on_invisibility_potion"));
+
+                // Update config version.
+                config.general.set("config_version", 2);
 
                 // Recheck if the config is fully migrated.
                 migrateConfig();

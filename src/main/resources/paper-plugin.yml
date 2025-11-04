@@ -1,0 +1,20 @@
+name: LyttleTab
+description: Custom tab plugin
+version: ${version}
+main: com.lyttledev.lyttletab.LyttleTab
+api-version: '1.21'
+authors:
+  - LyttleDevelopment
+  - ThatsATim
+  - Stualyttle
+
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    LuckPerms:
+      load: BEFORE
+      required: false
+      join-classpath: true
